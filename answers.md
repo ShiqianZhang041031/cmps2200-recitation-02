@@ -6,108 +6,166 @@
 
 Place all written answers from `recitation-02.md` here for easier grading.
 
-
 ## 4) Work Recurrences
 
-Here we have
+We consider the recurrence
 
 $$
-W(n)=2W(n/2)+f(n)
+W(n) = 2W(n/2) + f(n)
 $$
 
-with $W(1)=1$.
+with base case
 
-### (a) $f(n)=1$
+$$
+W(1) = 1.
+$$
+
+### (a) \(f(n) = 1\)
 
 The recurrence is
 
 $$
-W(n)=2W(n/2)+1.
+W(n) = 2W(n/2) + 1.
 $$
 
-At level $i$ of the recursion tree, there are $2^i$ nodes, and each
-node does constant work. Therefore, the cost of level $i$ is
+At level \(i\) of the recursion tree, there are
+
+$$
+2^i
+$$
+
+nodes.
+
+Each node does constant work, so the total work at level \(i\) is
 
 $$
 2^i.
 $$
 
-There are $\log_2 n$ levels, so the total work is
+The recursion tree has
 
 $$
-1+2+4+\cdots+n.
+\log_2 n
+$$
+
+levels.
+
+Therefore, the total work is
+
+$$
+1 + 2 + 4 + \cdots + n.
 $$
 
 This is a geometric series, so
 
 $$
-W(n)=\Theta(n).
+W(n) = \Theta(n).
 $$
 
 For powers of two, some actual values are:
 
-| $n$ | $W(n)$ |
+| \(n\) | \(W(n)\) |
 |---|---:|
 | 2 | 3 |
 | 4 | 7 |
 | 8 | 15 |
 | 16 | 31 |
 
-These values grow approximately linearly with $n$, which agrees with
-the asymptotic bound $\Theta(n)$.
+These values grow approximately linearly with \(n\), which agrees with the asymptotic bound
 
+$$
+\Theta(n).
+$$
 
-### (b) $f(n)=n$
+### (b) \(f(n) = n\)
 
 Now the recurrence is
 
 $$
-W(n)=2W(n/2)+n.
+W(n) = 2W(n/2) + n.
 $$
 
-At level $i$, there are $2^i$ nodes. Each node has input size
+At level \(i\), there are
+
+$$
+2^i
+$$
+
+nodes.
+
+Each node has input size
 
 $$
 \frac{n}{2^i}.
 $$
 
-Therefore, the total cost at level $i$ is
+Therefore, the total cost of level \(i\) is
 
 $$
-2^i\left(\frac{n}{2^i}\right)=n.
+2^i \left(\frac{n}{2^i}\right) = n.
 $$
 
-There are $\log_2 n$ levels, so
+Every level has total cost \(n\), and there are
 
 $$
-W(n)=\Theta(n\log n).
+\log_2 n
+$$
+
+levels.
+
+Therefore,
+
+$$
+W(n) = \Theta(n \log n).
 $$
 
 Some actual values are:
 
-| $n$ | $W(n)$ |
+| \(n\) | \(W(n)\) |
 |---|---:|
 | 2 | 4 |
 | 4 | 12 |
 | 8 | 32 |
 | 16 | 80 |
 
-The growth is faster than linear and matches the expected
-$\Theta(n\log n)$ behavior.
+These values grow faster than linearly and are consistent with
 
+$$
+\Theta(n \log n).
+$$
 
-### (c) $f(n)=n^2$
+### (c) \(f(n) = n^2\)
 
 The recurrence is
 
 $$
-W(n)=2W(n/2)+n^2.
+W(n) = 2W(n/2) + n^2.
 $$
 
-At level $i$, the total cost is
+At level \(i\), there are
 
 $$
-2^i\left(\frac{n}{2^i}\right)^2
+2^i
+$$
+
+nodes.
+
+Each node has input size
+
+$$
+\frac{n}{2^i}.
+$$
+
+Thus, the total work at level \(i\) is
+
+$$
+2^i \left(\frac{n}{2^i}\right)^2.
+$$
+
+Simplifying,
+
+$$
+2^i \cdot \frac{n^2}{2^{2i}}
 =
 \frac{n^2}{2^i}.
 $$
@@ -117,37 +175,51 @@ Therefore,
 $$
 W(n)
 =
-n^2+\frac{n^2}{2}+\frac{n^2}{4}+\cdots.
+n^2
++
+\frac{n^2}{2}
++
+\frac{n^2}{4}
++
+\cdots.
 $$
 
 This is a decreasing geometric series, so
 
 $$
-W(n)=\Theta(n^2).
+W(n) = \Theta(n^2).
 $$
 
 Some actual values are:
 
-| $n$ | $W(n)$ |
+| \(n\) | \(W(n)\) |
 |---|---:|
 | 2 | 6 |
 | 4 | 28 |
 | 8 | 120 |
 | 16 | 496 |
 
-These values grow quadratically, which agrees with the bound
-$\Theta(n^2)$.
+These values grow quadratically, which agrees with
 
+$$
+\Theta(n^2).
+$$
 
 ## 5) Master Method
 
 Consider the general recurrence
 
 $$
-T(n)=aT(n/b)+n^c.
+T(n) = aT(n/b) + n^c.
 $$
 
-At level $i$ of the recursion tree, there are $a^i$ subproblems.
+At level \(i\) of the recursion tree, there are
+
+$$
+a^i
+$$
+
+subproblems.
 
 The size of each subproblem is
 
@@ -155,126 +227,148 @@ $$
 \frac{n}{b^i}.
 $$
 
-The work done by one node at level $i$ is
+The work done by each node at level \(i\) is
 
 $$
 \left(\frac{n}{b^i}\right)^c.
 $$
 
-Therefore, the total work at level $i$ is
+Therefore, the total work at level \(i\) is
 
 $$
-a^i\left(\frac{n}{b^i}\right)^c.
+a^i
+\left(\frac{n}{b^i}\right)^c.
 $$
 
-Rearranging gives
+This simplifies to
 
 $$
-n^c\left(\frac{a}{b^c}\right)^i.
+a^i
+\frac{n^c}{b^{ic}}
+=
+n^c
+\left(\frac{a}{b^c}\right)^i.
 $$
 
-The height of the tree is
+The height of the recursion tree is
 
 $$
 \log_b n.
 $$
 
-Therefore, the total cost is determined by the ratio
+Therefore, the behavior of the recurrence depends on the ratio
 
 $$
 \frac{a}{b^c}.
 $$
 
-
-### Case 1: $\log_b a < c$
+### Case 1: \(\log_b a < c\)
 
 The condition
 
 $$
-\log_b a<c
+\log_b a < c
 $$
 
 is equivalent to
 
 $$
-a<b^c.
+a < b^c.
 $$
 
 Therefore,
 
 $$
-\frac{a}{b^c}<1.
+\frac{a}{b^c} < 1.
 $$
 
-The cost at each level decreases geometrically:
+The cost decreases geometrically as we move down the recursion tree.
+
+The costs of the first few levels are
 
 $$
 n^c,
-\quad
-n^c\frac{a}{b^c},
-\quad
-n^c\left(\frac{a}{b^c}\right)^2,
-\quad \ldots
 $$
 
-The root level dominates the sum. Therefore,
-
 $$
-T(n)=\Theta(n^c).
+n^c \left(\frac{a}{b^c}\right),
 $$
 
+$$
+n^c \left(\frac{a}{b^c}\right)^2,
+$$
 
-### Case 2: $\log_b a=c$
+and so on.
+
+Since the ratio is less than 1, the root dominates the sum.
+
+Therefore,
+
+$$
+T(n) = \Theta(n^c).
+$$
+
+### Case 2: \(\log_b a = c\)
 
 In this case,
 
 $$
-a=b^c,
+a = b^c.
 $$
 
-so
+Therefore,
 
 $$
-\frac{a}{b^c}=1.
+\frac{a}{b^c} = 1.
 $$
 
-Therefore, every level of the recursion tree has cost
+So every level of the recursion tree has total cost
 
 $$
 n^c.
 $$
 
-The tree has $\log_b n$ levels, so
+The tree has
 
 $$
-T(n)
-=
-n^c\log_b n.
+\log_b n
 $$
 
-Thus,
+levels.
+
+Therefore,
 
 $$
-T(n)=\Theta(n^c\log n).
+T(n) = n^c \log_b n.
 $$
 
-
-### Case 3: $\log_b a>c$
-
-Now
+Since the base of the logarithm only changes the result by a constant factor,
 
 $$
-a>b^c,
+T(n) = \Theta(n^c \log n).
 $$
 
-so
+### Case 3: \(\log_b a > c\)
+
+Now,
 
 $$
-\frac{a}{b^c}>1.
+\log_b a > c,
 $$
 
-The cost increases as we move down the recursion tree, so the leaves
-dominate the total cost.
+which is equivalent to
+
+$$
+a > b^c.
+$$
+
+Therefore,
+
+$$
+\frac{a}{b^c} > 1.
+$$
+
+The cost increases geometrically as we move down the recursion tree, so the leaves dominate the total cost.
 
 The number of leaves is
 
@@ -282,66 +376,101 @@ $$
 a^{\log_b n}.
 $$
 
-Using
+Using the identity
 
 $$
-a^{\log_b n}=n^{\log_b a},
+a^{\log_b n}
+=
+n^{\log_b a},
 $$
 
-the total cost is
+the leaf cost is
 
 $$
-T(n)=\Theta\left(n^{\log_b a}\right).
+\Theta\left(n^{\log_b a}\right).
 $$
 
-
-Therefore, the three cases of the Master Method are
+Therefore,
 
 $$
-T(n)=
-\begin{cases}
-\Theta(n^c), & \log_b a<c,\\
-\Theta(n^c\log n), & \log_b a=c,\\
-\Theta(n^{\log_b a}), & \log_b a>c.
-\end{cases}
+T(n)
+=
+\Theta\left(n^{\log_b a}\right).
 $$
 
+Thus, the three cases of the Master Method are
+
+$$
+T(n)
+=
+\Theta(n^c)
+\quad
+\text{if }
+\log_b a < c,
+$$
+
+$$
+T(n)
+=
+\Theta(n^c \log n)
+\quad
+\text{if }
+\log_b a = c,
+$$
+
+and
+
+$$
+T(n)
+=
+\Theta\left(n^{\log_b a}\right)
+\quad
+\text{if }
+\log_b a > c.
+$$
 
 ## 7) Span Recurrences
 
-For span, the recursive subproblems can run in parallel. Therefore,
-instead of including all $a$ recursive calls, we only follow one path
-through the recursion tree.
+For span, the recursive subproblems can run in parallel.
 
-With $a=2$ and $b=2$, the span recurrence is
+Therefore, instead of adding the work of all recursive branches, we only follow one recursive path.
+
+For the recurrences in Problem 4, where \(a = 2\) and \(b = 2\), the span recurrence is
 
 $$
-S(n)=S(n/2)+f(n).
+S(n) = S(n/2) + f(n).
 $$
 
-
-### (a) $f(n)=1$
+### (a) \(f(n) = 1\)
 
 We have
 
 $$
-S(n)=S(n/2)+1.
+S(n) = S(n/2) + 1.
 $$
 
-There are $\log_2 n$ levels in the recursion tree, and each level has
-constant span. Therefore,
+There are
 
 $$
-S(n)=\Theta(\log n).
+\log_2 n
 $$
 
+levels in the recursion tree.
 
-### (b) $f(n)=n$
+Each level contributes constant span.
+
+Therefore,
+
+$$
+S(n) = \Theta(\log n).
+$$
+
+### (b) \(f(n) = n\)
 
 We have
 
 $$
-S(n)=S(n/2)+n.
+S(n) = S(n/2) + n.
 $$
 
 Expanding the recurrence gives
@@ -349,49 +478,75 @@ Expanding the recurrence gives
 $$
 S(n)
 =
-n+\frac{n}{2}+\frac{n}{4}+\cdots.
+n
++
+\frac{n}{2}
++
+\frac{n}{4}
++
+\frac{n}{8}
++
+\cdots.
 $$
 
-This is a geometric series, so
+This is a geometric series.
+
+Therefore,
 
 $$
-S(n)=\Theta(n).
+S(n) = \Theta(n).
 $$
 
-
-### (c) $f(n)=n^2$
+### (c) \(f(n) = n^2\)
 
 We have
 
 $$
-S(n)=S(n/2)+n^2.
+S(n) = S(n/2) + n^2.
 $$
 
-Expanding gives
+Expanding the recurrence gives
 
 $$
 S(n)
 =
-n^2+\frac{n^2}{4}+\frac{n^2}{16}+\cdots.
+n^2
++
+\frac{n^2}{4}
++
+\frac{n^2}{16}
++
+\frac{n^2}{64}
++
+\cdots.
 $$
 
-Again this is a geometric series, so
+This is also a geometric series.
+
+Therefore,
 
 $$
-S(n)=\Theta(n^2).
+S(n) = \Theta(n^2).
 $$
 
-Thus the span bounds are
+So the final span bounds are:
+
+- If \(f(n) = 1\), then
 
 $$
-\boxed{
-\begin{aligned}
-f(n)=1 &: \Theta(\log n),\\
-f(n)=n &: \Theta(n),\\
-f(n)=n^2 &: \Theta(n^2).
-\end{aligned}
-}
+S(n) = \Theta(\log n).
 $$
 
-These match what we would expect, since span follows only one
-recursive branch instead of adding the work from all branches.
+- If \(f(n) = n\), then
+
+$$
+S(n) = \Theta(n).
+$$
+
+- If \(f(n) = n^2\), then
+
+$$
+S(n) = \Theta(n^2).
+$$
+
+These results make sense because span follows only one recursive branch, while work includes all recursive branches.
